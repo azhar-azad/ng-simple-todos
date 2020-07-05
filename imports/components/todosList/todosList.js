@@ -10,7 +10,12 @@ class TodosListCtrl {
 
         this.helpers({
             tasks() {
-                return Tasks.find({});
+                // Show newest tasks at the top
+                return Tasks.find({}, {
+                    sort: {
+                        createdAt: -1
+                    }
+                });
             }
         });
 
@@ -19,6 +24,17 @@ class TodosListCtrl {
         //     { text: 'This is task 2' },
         //     { text: 'This is task 3' }
         // ];
+    }
+
+    addTask(newTask) {
+        // Insert a task into the collection
+        Tasks.insert({
+            text: newTask,
+            createdAt: new Date
+        });
+
+        // clear form
+        this.newTask = '';
     }
 }
 
